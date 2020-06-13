@@ -7,7 +7,7 @@ fn main(){
     // game();
     // test_type_base();
     // if_else_math(false);
-    test::test_item2();
+    test::test_splic();
 }
 
 fn game(){

@@ -55,9 +55,86 @@ fn test_fn(mut some_string:String)->String{
 pub fn test_item2(){
     let mut str = String::from("test");
     test_fn2(&mut str);
+    test_fn2(&mut str);
+    let one = &mut str;
+
+    //todo 注意这个所有权和 变量的所有权 类似 ， 变量的所有权在一个范围中允许所有权转移但是第一个变量将会不可使用
+    //todo 但是 参考在一个作用域中将不允许多个所有者
+    //主要是为了防止使用指针导致数据征用的问题
+
+    //todo 两个或多个指针同时访问相同的数据。
+    // 至少有一个指针用于写入数据。
+    // 没有用于同步对数据访问的机制。
+    //let two = &mut str;
+    //println!("{},{}",one,two);
+
+    //TODO 注意如果不可变引用和可变引用同时存在的时候 ， 应该保证产生不可变之后到使用不可变引用之间  没有任何修改数据的操作（指针或者值）， 没有任何的可变引用
+    let r3 = &mut str; // no problem
+    println!("{}",r3);
+
+    let r1 = &str; // no problem
+    let r2 = &str; // no problem
+    println!("{} {}",r1,r2);
+
     println!("{}",str);
 }
 
 pub fn test_fn2(s: &mut String){
     s.push_str("sdfsdf");
+}
+
+//todo 返回内部引用 错误写法 ： s 引用的作用是在 内部的 ， 返回一个可修改的没有意义
+// pub fn test_fn3() -> &mut String{
+//     let mut s  = String::from("sdf");
+//     return &mut s;
+// }
+
+//TODO 错误 因为 s 在最后会释放掉 ， 所以指针将会变成悬空指针
+// pub fn test_fn3() -> &String{
+//     let mut s  = String::from("sdf");
+//     return &s;
+// }
+
+
+//todo 直接返回变量 ， 所有权转移，而不是使用参考 ， 指针
+
+pub fn test_fn3() -> String{
+    let mut s  = String::from("sdf");
+    return s;
+}
+
+pub fn test_splic(){
+    let mut str = String::from("test one item");
+    let index = test_fn4(&str);
+    println!("{}",index);
+    str.clear();
+    println!("{}",str);
+
+    //字符串切片 , rust 中的切片属于引用，操作方法和引用类似
+
+    let mut string = String::from("test splice item ");
+    let one = &mut string[1..2];
+    let mut one_str = String::from(one);
+    one_str.push_str("ttttt");
+    println!("{}", one_str);
+
+    //todo 注意切片返回的是不可变引用
+    let mut arr = [1,3,4,5,6,7,8,9];
+    let new_one = test_split(&mut arr);
+    println!("{}",new_one[0]);
+
+}
+
+fn test_fn4(s:&String)->usize{
+    let bytes = s.as_bytes();
+    for(i,&item) in bytes.iter().enumerate(){
+        if item== b' '{
+            return i;
+        }
+    }
+    return s.len();
+}
+
+fn test_split(arr:&mut [i32]) -> & [i32]{
+    return & arr[3..arr.len()];
 }
