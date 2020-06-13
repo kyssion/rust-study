@@ -2,12 +2,14 @@ use std::cmp::Ordering;
 use std::io::stdin;
 use rand::Rng;
 mod test;
+mod test3;
 
 fn main(){
     // game();
     // test_type_base();
     // if_else_math(false);
-    test::test_splic();
+    // test_fn_1();
+    test3::test1();
 }
 
 fn game(){
