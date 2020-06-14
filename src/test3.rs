@@ -114,6 +114,5 @@ fn test(){
     let ccc = 123;
     let mut a = [1,2,3,4,5,6];
     let b = &a[1..3];
-    a[5] = 5;
     println!("{:?}",b);
 }

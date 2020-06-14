@@ -3,13 +3,15 @@ use std::io::stdin;
 use rand::Rng;
 mod test;
 mod test3;
+mod test4;
 
 fn main(){
     // game();
     // test_type_base();
     // if_else_math(false);
     // test_fn_1();
-    test3::test1();
+    // test3::test1();
+    test4::test1();
 }
 
 fn game(){
