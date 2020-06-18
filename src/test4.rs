@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::ErrorKind;
 
 #[derive(Debug)]
 struct Range{
@@ -105,7 +108,6 @@ fn test_vec(){
 }
 
 fn test_ver(){
-    Vec::new();
     let mut item = vec![1,2,3,4,5];
     //todo 这个地方用& 和不用这个个结果相同，不知道为啥
     let p = &item[3];
@@ -117,5 +119,23 @@ fn test_str(){
     let item = String::from("test");
     let item2 = String :: from("test2");
     let item3 = item+&item2;
+
+
+    let mut myHash :HashMap<i32,String> = HashMap::new();
+    let b = 123;
+    let c = String::from("sdfsdf");
+    myHash.insert(b,c);
+
+    panic!("sdfsdf");
+
+    let f = File::open("hello.txt").unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            File::create("hello.txt").unwrap_or_else(|error| {
+                panic!("Problem creating the file: {:?}", error);
+            })
+        } else {
+            panic!("Problem opening the file: {:?}", error);
+        }
+    });
 }
 
